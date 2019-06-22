@@ -40,6 +40,7 @@ while t<Max_iter
         % Return back the search agents that go beyond the boundaries of the search space
         Flag4ub=Positions(i,:)>ub;
         Flag4lb=Positions(i,:)<lb;
+        % 把大于ub的改为ub,把小于lb的改为lb,其他不变
         Positions(i,:)=(Positions(i,:).*(~(Flag4ub+Flag4lb)))+ub.*Flag4ub+lb.*Flag4lb;
         
         % Calculate objective function for each search agent
@@ -63,8 +64,8 @@ while t<Max_iter
         r1=rand(); % r1 is a random number in [0,1]
         r2=rand(); % r2 is a random number in [0,1]
         
-        A=2*a*r1-a;  % Eq. (2.3) in the paper
-        C=2*r2;      % Eq. (2.4) in the paper
+        A=2*a*r1-a;  % Eq. (2.3) in the paper   [-a a]之间的随机数
+        C=2*r2;      % Eq. (2.4) in the paper   [0 2]
         
         
         b=1;               %  parameters in Eq. (2.5)
