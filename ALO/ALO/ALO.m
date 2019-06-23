@@ -41,8 +41,10 @@ ant_position=initialization(N,dim,ub,lb);
 % Initialize variables to save the position of elite, sorted antlions, 
 % convergence curve, antlions fitness, and ants fitness
 Sorted_antlions=zeros(N,dim);
+% 精英蚁狮
 Elite_antlion_position=zeros(1,dim);
 Elite_antlion_fitness=inf;
+% 收敛曲线
 Convergence_curve=zeros(1,Max_iter);
 antlions_fitness=zeros(1,N);
 ants_fitness=zeros(1,N);
@@ -69,15 +71,17 @@ while Current_iter<Max_iter+1
     % This for loop simulate random walks
     for i=1:size(ant_position,1)
         % Select ant lions based on their fitness (the better anlion the higher chance of catching ant)
+       % 轮盘赌
         Rolette_index=RouletteWheelSelection(1./sorted_antlion_fitness);
         if Rolette_index==-1  
             Rolette_index=1;
         end
       
-        % RA is the random walk around the selected antlion by rolette wheel
+        % RA is the random walk around the selected antlion by rolette
+        % wheel，第Rolette_index只蚁狮
         RA=Random_walk_around_antlion(dim,Max_iter,lb,ub, Sorted_antlions(Rolette_index,:),Current_iter);
         
-        % RA is the random walk around the elite (best antlion so far)
+        % RA is the random walk around the elite (best antlion so far) 最优蚁狮
         [RE]=Random_walk_around_antlion(dim,Max_iter,lb,ub, Elite_antlion_position(1,:),Current_iter);
         
         ant_position(i,:)= (RA(Current_iter,:)+RE(Current_iter,:))/2; % Equation (2.13) in the paper          

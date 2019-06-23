@@ -55,6 +55,7 @@ end
 
 
 % Dicrease boundaries to converge towards antlion
+% 随着迭代次数的增加，这个范围会越来越小
 lb=lb/(I); % Equation (2.10) in the paper
 ub=ub/(I); % Equation (2.11) in the paper
 
@@ -74,12 +75,15 @@ end
 % This function creates n random walks and normalize accroding to lb and ub
 % vectors 
 for i=1:Dim
+    % 2*(rand(max_iter,1)>0.5)-1  就是生成max_iter个数，随机数大于0.5为1，小于0.5 为-1
+    % cumsum X[n] 为前n个数的和
     X = [0 cumsum(2*(rand(max_iter,1)>0.5)-1)']; % Equation (2.1) in the paper
     %[a b]--->[c d]
     a=min(X);
     b=max(X);
     c=lb(i);
-    d=ub(i);      
+    d=ub(i); 
+    % X值
     X_norm=((X-a).*(d-c))./(b-a)+c; % Equation (2.7) in the paper
     RWs(:,i)=X_norm;
 end
